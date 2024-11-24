@@ -1,43 +1,32 @@
 import express from 'express';
+import messagesController from './controllers/messages.controller.js';  // Importing the default export
+import friendsController from './controllers/friends.controller.js';
+
+const { getMessages, postMessages } = messagesController;
+const { postFriends, getFriends, getFriend } = friendsController;
 
 const app = express();
-const PORT = 3000
+const PORT = 3000;
 
-const friends = [
-    {
-    id : 0,
-    name: 'John Nolan',
-},
-{
-    id : 1,
-    name: 'Lucy Chen'
-}]
 
-app.use((req,res,next)=>{
-    const start = Date.now()
-    next()
-    const delta = Date.now() - start
-    console.log(`${req.method} ${req.url} ${delta}ms`)
-    // console.log(`Request: ${req.method} ${req.url}`)
-    
-})
 
-app.get('/friends', (req,res)=>{res.json(friends)})
+app.use((req, res, next) => {
+    const start = Date.now();
+    next();
+    const delta = Date.now() - start;
+    console.log(`${req.method} ${req.url} ${delta}ms`);
+});
 
-app.get('/friends/:friendId',(req,res)=>{
-    const friendId = Number(req.params.friendId)
-    const friend = friends[friendId]
-    if(friend){
-        res.json(friend)
-    }else{
-        res.status(404).json({error: 'Friend not found'})
-    }
-})
+app.use(express.json());
 
-app.get('/messages',(req,res)=>{
-    res.send('<ul><li>Message 1</li><li>Message 2</li></ul>')
-})
+app.post('/friends',friendsController.postFriends)
+app.get('/friends',friendsController.getFriends);
+app.get('/friends/:friendId',friendsController.getFriend
+);
 
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`)
-})
+app.get('/messages', getMessages); 
+app.post('/messages', postMessages);  
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
