@@ -6,8 +6,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const getMessages = (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public', 'skimountain.jpg'));
-    // res.send('<ul><li>The Rookie</li><li>10/10</li></ul>');
+    res.sendFile(path.join(__dirname, '..', 'public', 'images', 'skimountain.jpg'));
+    
 };
 
 function postMessages(req, res) {
