@@ -1,10 +1,10 @@
 import express from 'express';
-import { getAllPlanets } from './planets.controller.js'; // Correct import
+import {httpgGetAllPlanets } from './planets.controller.js'; // Correct import
 
 
 const planetsRouter = express.Router();
 
 // Define the route
-planetsRouter.get('/', getAllPlanets);
+planetsRouter.get('/', httpgGetAllPlanets);
 
 export default planetsRouter;
