@@ -1,5 +1,5 @@
-import {planets} from '../../models/planets.model.js'; // Correct file extension
+import {getAllPlanets} from '../../models/planets.model.js'; // Correct file extension
 
-export function getAllPlanets(req, res) {
-    return res.status(200).json(planets);
+export function httpgGetAllPlanets(req, res) {
+    return res.status(200).json(getAllPlanets);
 }
