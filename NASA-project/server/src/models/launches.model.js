@@ -13,5 +13,9 @@ export const launch = {
 
 launches.set(launch.flightNumber, launch);
 
+export function getAllLaunches(){
+    return Array.from(launches.values())
+}
+
 // Exporting the `launches` map
 export { launches };
