@@ -16,6 +16,10 @@ export const launch = {
 
 launches.set(launch.flightNumber, launch);
 
+function existsLaunchWithId(launchId){
+  return launches.has(launchId)
+}
+
 export function getAllLaunches(){
     return Array.from(launches.values())
 }
@@ -31,5 +35,16 @@ function addNewLaunch(launch){
   }));
 }
 
+function abortLaunchById(launchId){
+  const aborted = launches.get(launchId);
+  aborted.upcoming = false;
+  aborted.success = false;
+  return aborted;
+
+}
+
 // Exporting the `launches` map
-export { launches,addNewLaunch };
+export { launches,
+  addNewLaunch,
+  existsLaunchWithId,
+  abortLaunchById };
