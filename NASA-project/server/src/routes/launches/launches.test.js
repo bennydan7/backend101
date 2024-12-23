@@ -1,10 +1,6 @@
 import {jest} from '@jest/globals';
 import request from 'supertest';
 import app from '../../app.js';
-// import supertest from 'supertest';
-
-// const request = require('supertest')
-// const app = require("../../app")
 
 describe('Test GET /launches', () => {
     test('It should respond with 200 success',async ()=>{
@@ -17,10 +13,38 @@ describe('Test GET /launches', () => {
 )
 
 describe('Test POST /launch',()=>{
-    test('It should respond with 20 created',()=>{
-        const response = 201;
-        expect(response).toBe(201)
+    const completeLaunchData = {
+        mission: 'USS Enterprise',
+        rocket: 'NCC 1701-D',
+        target: 'Kepler-186 f',
+        launchDate: 'January 4, 2028'
+}
+    const LaunchDataWithoutDate = {
+        mission: 'USS Enterprise',
+        rocket: 'NCC 1701-D',
+        target: 'Kepler-186 f',
+       
+}
+
+    test('It should respond with 201 created',async ()=>{
+        const response = await request(app)
+        .post('/launches')
+        .send(completeLaunchData)
+        .expect("Content-Type",/json/)  
+        .expect(201)
+    
+    const requestDate = new Date(completeLaunchData.launchDate).valueOf()
+    const responseDate = new Date(response.body.launchDate).valueOf()
+    expect (responseDate).toBe(requestDate)
+
+    expect(response.body).toMatchObject(LaunchDataWithoutDate)
+   })
+    test('It should catch missing required launch property',async ()=>{
+        const response = await request(app)
+        .post('/launches')
+        .send(LaunchDataWithoutDate)
+        .expect("Content-Type",/json/)  
+        .expect(400)
     })
-    test('It should catch missing required launch property',()=>{})
     test('It should catch invalid launch date',()=>{})
-})
+});
