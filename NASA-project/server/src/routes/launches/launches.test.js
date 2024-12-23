@@ -8,14 +8,16 @@ import app from '../../app.js';
 
 describe('Test GET /launches', () => {
     test('It should respond with 200 success',async ()=>{
-        const response = await request(app).get('/launches');
-        expect(response.statusCode).toBe(200)
-    })
+        const response = await request(app)
+        .get('/launches')
+        .expect("Content-Type",/json/)
+        .expect(200)
+        })
 }
 )
 
 describe('Test POST /launch',()=>{
-    test('It should respond with 201 created',()=>{
+    test('It should respond with 20 created',()=>{
         const response = 201;
         expect(response).toBe(201)
     })
