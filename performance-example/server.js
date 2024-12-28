@@ -8,6 +8,10 @@ function delay(duration){
 }
 
 app.get('/', (req, res) => {
+    // JSON.stringify({})
+    // JSON.parse('{}')
+    // [5,4,5343,3].sort()
+    // crypto functions in node  like hashing passwords
     res.send('Performance Example');
     })
 
