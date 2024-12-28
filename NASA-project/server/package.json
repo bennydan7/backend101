@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test-watch":  "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test-watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "start": "node src/server.js",
-    "watch": "nodemon src/server.js"
+    "watch": "nodemon src/server.js",
+    "cluster": "pm2 start src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +21,8 @@
     "jest-environment-node": "^29.7.0",
     "morgan": "^1.10.0",
     "nasa-project-api": "file:",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "pm2": "^5.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
