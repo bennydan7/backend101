@@ -33,7 +33,7 @@ const launchesSchema = new mongoose.Schema ({
     }
 });
 
-const Launch = mongoose.model('Launch',launchesSchema);
+const launches = mongoose.model('Launch',launchesSchema);
 
 export default Launch;
 
