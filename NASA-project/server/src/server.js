@@ -20,9 +20,9 @@ mongoose.connection.on('error', (err) => {
 
 async function startServer() {
     try {
-        // Removed deprecated options
+        
         await mongoose.connect(MONGO_URL, {
-            useNewUrlParser: true, // Still valid
+            useNewUrlParser: true,
         });
 
         await loadPlanetsData();
