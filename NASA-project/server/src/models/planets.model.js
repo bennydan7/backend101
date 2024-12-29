@@ -8,6 +8,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+import Planet from './planet.mongo';
+
 const habitablePlanets = [];
 function isHabitablePlanet(planet) {
   return planet['koi_disposition'] === 'CONFIRMED'
