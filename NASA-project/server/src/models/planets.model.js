@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import planets from './planet.mongo';
+import planets from './planet.mongo.js';
 
 const habitablePlanets = [];
 
@@ -45,8 +45,8 @@ export function loadPlanetsData() {
   });
 }
 
-export function getAllPlanets(){
-  return habitablePlanets
+export async function getAllPlanets(){
+  return await planets.find({})
 }
 
 // export const planets = habitablePlanets;
