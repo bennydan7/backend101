@@ -8,14 +8,16 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-import Planet from './planet.mongo';
+import planets from './planet.mongo';
 
 const habitablePlanets = [];
+
 function isHabitablePlanet(planet) {
   return planet['koi_disposition'] === 'CONFIRMED'
     && planet['koi_insol'] > 0.36 && planet['koi_insol'] < 1.11
     && planet['koi_prad'] < 1.6;
 }
+
 export function loadPlanetsData() {
   return new Promise((resolve, reject) => {
     fs.createReadStream(path.join(__dirname, '..', '..', 'data', 'kepler_data.csv'))
@@ -23,9 +25,13 @@ export function loadPlanetsData() {
         comment: '#',
         columns: true,
       }))
-      .on('data', (data) => {
+      .on('data', async (data) => {
         if (isHabitablePlanet(data)) {
-          habitablePlanets.push(data);
+          // insert + update = upsert
+
+          // await planets.create({
+          //   keplerName: data.kepler_name,
+          // })
         }
       })
       .on('error', (err) => {
