@@ -8,7 +8,7 @@
     "test-watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
     "start": "node src/server.js",
     "watch": "nodemon src/server.js",
-    "cluster": "pm2 start src/server.js"
+    "cluster": "pm2 start src/server.js -i max"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +19,7 @@
     "csv-parse": "^5.6.0",
     "express": "^4.21.1",
     "jest-environment-node": "^29.7.0",
+    "mongoose": "^8.9.2",
     "morgan": "^1.10.0",
     "nasa-project-api": "file:",
     "nodemon": "^3.1.7",
