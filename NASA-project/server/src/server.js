@@ -2,11 +2,14 @@ import http from 'http';
 import app from './app.js';
 import mongoose from 'mongoose';
 import { loadPlanetsData } from './models/planets.model.js';
+// import dotenv from 'dotenv'
+
+// dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 
 // Corrected connection string with URL-encoded special character
-const MONGO_URL = 'mongodb+srv://nasa-api:7sQYgkJ8phxN6%40z@nasacluster.ohv3u.mongodb.net/?retryWrites=true&w=majority';
+const MONGO_URL = 'mongodb+srv://nasa-api:7sQYgkJ8phxN6%40z@nasacluster.ohv3u.mongodb.net/?retryWrites=true&w=majority&appName=NASACluster';
 
 const server = http.createServer(app);
 
@@ -34,5 +37,5 @@ async function startServer() {
         console.error('Failed to start the server:', error);
     }
 }
-+
+
 startServer();
