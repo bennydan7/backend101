@@ -1,4 +1,4 @@
-import { getAllLaunches,addNewLaunch,existsLaunchWithId, abortLaunchById } from '../../models/launches.model.js';
+import { getAllLaunches,scheduleNewLaunch,existsLaunchWithId, abortLaunchById } from '../../models/launches.model.js';
 
 // export function httpGetAllLaunches(req, res) {
 //   return res.status(200).json(Array.from(getAllLaunches.values()));
@@ -8,7 +8,7 @@ export async function httpGetAllLaunches(req, res) {
 }
 
 
-export function httpAddNewLaunch(req, res) {
+export async function httpAddNewLaunch(req, res) {
   const launch = req.body;
 
   if(!launch.mission || !launch.rocket || !launch.launchDate || !launch.target){
@@ -25,7 +25,7 @@ export function httpAddNewLaunch(req, res) {
     })
   }
 
-  addNewLaunch(launch);
+  await scheduleNewLaunch(launch);
   return res.status(201).json(launch);
 }
 
