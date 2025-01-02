@@ -3,8 +3,8 @@ import { getAllLaunches,addNewLaunch,existsLaunchWithId, abortLaunchById } from 
 // export function httpGetAllLaunches(req, res) {
 //   return res.status(200).json(Array.from(getAllLaunches.values()));
 // }
-export function httpGetAllLaunches(req, res) {
-  return res.status(200).json(getAllLaunches());
+export async function httpGetAllLaunches(req, res) {
+  return res.status(200).json(await getAllLaunches());
 }
 
 
