@@ -3,7 +3,7 @@ import planets from "./planet.mongo.js";
 
 const launches = new Map();
 
-let latestFlightNumber = 100;
+const DEFAULT_FLIGHT_NUMBER = 100;
 
 
 export const launch = {
@@ -21,6 +21,18 @@ saveLaunch(launch);
 
 function existsLaunchWithId(launchId){
   return launches.has(launchId)
+}
+
+async function getLatestFlightNumber(){
+  const latestLaunch = await launchesdb
+  .findOne()
+  .sort('flightNumber');
+
+  if(!latestLaunch){
+    return DEFAULT_FLIGHT_NUMBER;
+  }
+
+  return latestLaunch.flightNumber;
 }
 
 export async function getAllLaunches(){
@@ -46,16 +58,20 @@ async function saveLaunch(launch){
 
 }
 
-function addNewLaunch(launch){
-  latestFlightNumber++;
-  launches.set(launch.flightNumber,
-    Object.assign(launch,{
-      success: true,
-      upcoming: true,
-      customers: ['Zero to Mastery','NASA'],
-      flightNumber: latestFlightNumber,
-  }));
+export async function scheduleNewLaunch(launch){
+  const newFlightNumber = await getLatestFlightNumber() + 1;
+
+  const newLaunch = Object.assign(launch,{
+    success: true,
+    upcoming: true,
+    customers: ['ZTM','NASA'],
+    flightNumber: newFlightNumber,
+  });
+
+  await saveLaunch(newLaunch);
 }
+
+
 
 function abortLaunchById(launchId){
   const aborted = launches.get(launchId);
@@ -67,6 +83,5 @@ function abortLaunchById(launchId){
 
 // Exporting the `launches` map
 export { launches,
-  addNewLaunch,
   existsLaunchWithId,
   abortLaunchById };
