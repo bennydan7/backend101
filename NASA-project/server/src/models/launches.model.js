@@ -26,6 +26,15 @@ export function getAllLaunches(){
     return Array.from(launches.values())
 }
 
+async function saveLaunch(launch){
+  await launchesdb.updateOne({
+    flightNumber: launch.flightNumber,
+  },launch,{
+    upsert:true
+  })
+
+}
+
 function addNewLaunch(launch){
   latestFlightNumber++;
   launches.set(launch.flightNumber,
