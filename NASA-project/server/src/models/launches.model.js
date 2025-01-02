@@ -16,14 +16,18 @@ export const launch = {
   success: true,
 };
 
-launches.set(launch.flightNumber, launch);
+saveLaunch(launch);
 
 function existsLaunchWithId(launchId){
   return launches.has(launchId)
 }
 
-export function getAllLaunches(){
-    return Array.from(launches.values())
+export async function getAllLaunches(){
+    return await launchesdb.
+    find({},
+      {
+        '_id': 0, '__v': 0
+      })
 }
 
 async function saveLaunch(launch){
