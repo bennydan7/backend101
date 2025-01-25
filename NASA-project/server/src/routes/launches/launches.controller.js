@@ -41,7 +41,7 @@ export async function httpAbortLaunch(req,res){
     })
   }
 
-  const aborted = abortLaunchById(launchId);
+  const aborted = await abortLaunchById(launchId);
   return res.status(200).json(aborted)
 
 }
