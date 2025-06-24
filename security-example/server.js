@@ -4,6 +4,8 @@ const path = require('path')
 const express = require('express')
 const helmet = require('helmet')
 
+require('dotenv').config()
+
 const PORT = 3000
 
 
@@ -19,6 +21,12 @@ app.use((req, res, next) => {
     next()})
 
 */
+
+const config = {
+    CLIENT_ID : process.env.CLIENT_ID,
+    CLIENT_SECRET : process.env.CLIENT_SECRET
+}
+
 app.use(helmet())
 
 function checkLoggedIn(req,res, next) {
