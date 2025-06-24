@@ -10,13 +10,36 @@ const PORT = 3000
 const app = express()
 //security related middleware
 // right at the top 
+/*  some middle to check security
 
+app.use((req, res, next) => {
+    const isLoggdIn = true  // TODO
+    IF (!isLoggedIn) {
+    return res.status(401)
+    next()})
 
+*/
 app.use(helmet())
 
-app.get('/secret', (req,res)=> {
+function checkLoggedIn(req,res, next) {
+    const isLoggedIn = true
+    if (!isLoggedIn) {
+        return res.status(401).json({
+            error: 'You must Log in!'
+        })
+    }
+    next()
+}
+
+app.get('/secret',checkLoggedIn, (req,res)=> {
     return res.send('Your personal secret value is 42!')
 })
+
+app.get('/auth/google', (req,res) =>{})
+
+app.get('/auth/google/callback', (req,res) =>{})
+
+app.get('/auth/logout', (req,res) =>{})
 
 app.get('/',(req,res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
