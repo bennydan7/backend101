@@ -19,7 +19,8 @@ const config = {
 // right at the top 
 /*  some middle to check security
 
-app.use((req, res, next) => {
+app.use((req
+, res, next) => {
     const isLoggdIn = true  // TODO
     IF (!isLoggedIn) {
         return res.status(401)
@@ -30,16 +31,17 @@ app.use((req, res, next) => {
     
 
 const AUTH_OPTIONS = {
-    callbackURL: 'auth/google/callback',
+    callbackURL: '/auth/google/callback',
     clientID: config.CLIENT_ID,
     clientSecret: config.CLIENT_SECRET
+};
+
+function verifyCallback(accessToken, refreshToken, profile, done) {
+    console.log('Google profile', profile);
+    done(null, profile);
 }
 
-function verifyCallback(accessToken, refreshToken, profile, done){
-
-}
-
-passport.use(new Strategy({AUTH_OPTIONS, verifyCallback}))
+passport.use(new Strategy(AUTH_OPTIONS, verifyCallback));
 
 const app = express()
 
@@ -60,11 +62,26 @@ app.get('/secret',checkLoggedIn, (req,res)=> {
     return res.send('Your personal secret value is 42!')
 })
 
-app.get('/auth/google', (req,res) =>{})
+app.get('/auth/google',
+    passport.authenticate('google',{
+        scope: ['email']
+    })
+)
 
-app.get('/auth/google/callback', (req,res) =>{})
+app.get(
+    '/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/failure',
+        successRedirect: '/',
+        session: false
+    })
+)
 
 app.get('/auth/logout', (req,res) =>{})
+
+app.get('failure', (req,res)=>{
+    return res.send('Failed to log in')
+})
 
 app.get('/',(req,res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
